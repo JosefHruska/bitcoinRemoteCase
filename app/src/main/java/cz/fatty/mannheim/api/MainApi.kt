@@ -1,11 +1,11 @@
-package cz.fatty.dreamer.api
+package cz.fatty.mannheim.api
 
-import cz.fatty.dreamer.objects.BitcoinAverage
+import cz.fatty.mannheim.objects.BitcoinRate
 import io.reactivex.Observable
 import retrofit2.http.GET
 
-interface BaseApi {
+interface MainApi {
 
     @GET("https://apiv2.bitcoinaverage.com/indices/global/history/BTCUSD?period=daily&format=json")
-    fun getAverages() : Observable<BitcoinAverage>
+    fun getRates() : Observable<BitcoinRate>
 }

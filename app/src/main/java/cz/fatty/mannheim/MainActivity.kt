@@ -1,4 +1,4 @@
-package cz.fatty.dreamer
+package cz.fatty.mannheim
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar

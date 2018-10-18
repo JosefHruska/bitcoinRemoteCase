@@ -1,4 +1,4 @@
-package cz.fatty.dreamer
+package cz.fatty.mannheim
 
 import org.junit.Test
 

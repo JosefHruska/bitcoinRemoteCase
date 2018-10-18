@@ -1,4 +1,4 @@
-package cz.fatty.dreamer
+package cz.fatty.mannheim
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

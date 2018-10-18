@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "839530075348",
+    "firebase_url": "https://stocard-6ce03.firebaseio.com",
+    "project_id": "stocard-6ce03",
+    "storage_bucket": "stocard-6ce03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839530075348:android:150a565b9f110b30",
+        "android_client_info": {
+          "package_name": "cz.fatty.mannheim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839530075348-bej8mqfub2bgostk2dr5tdtmqmuj8iue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfWiEkk1nYHlfSs4xg9Ve-b2Md9Auoego"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
