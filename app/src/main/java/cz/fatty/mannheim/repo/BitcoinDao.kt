@@ -28,5 +28,4 @@ interface BitcoinDao {
 
     @Query("SELECT * FROM DAILY_RATE ")
     fun getDailyRates(): LiveData<List<BitcoinDailyRate>>
-
 }

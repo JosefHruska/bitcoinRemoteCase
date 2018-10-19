@@ -1,10 +1,8 @@
 package cz.fatty.mannheim.base
 
-import android.annotation.SuppressLint
 import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import cz.fatty.mannheim.Db
 import cz.fatty.mannheim.R
 import cz.fatty.mannheim.extensions.toText
 import cz.fatty.mannheim.networking.NetworkMonitor
@@ -21,41 +19,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 
 open class BaseApiService() {
-
-    var token: String? = null
-    //var loginApi: LoginApi? = null
-    var isRefreshingLogin = false
-
-    init {
-        subscribeToken()
-    }
-
-    @SuppressLint("CheckResult")
-    fun subscribeToken() {
-        /*  val tokenObservable = db.loginDao().getTokenRx()
-          tokenObservable.subscribe {
-              token = it.token
-          }*/
-    }
-    /*
-        private fun refreshLogin() {
-            if (loginApi == null) {
-                loginApi = getRetro<LoginApi>(getUrl())
-            }
-            doAsync {
-                val userData = db.loginDao().getUserData()
-                if (userData?.email != null && !userData.email.isBlank() && !userData.password.isBlank()) {
-                    loginApi?.login(Login(userData.email, userData.password))?.subscribe { response ->
-                        val token = Token(Token.encodeToken(response.token), response.dateExpires, true)
-                        db.loginDao().insertToken(token)
-                        isRefreshingLogin = false
-                    }
-                } else {
-                    Log.w(TAG, "AUTH: token can not be refreshed - probably empty credentials.")
-                    isRefreshingLogin = false
-                }
-            }
-        }*/
 
     inline fun <reified T> getRetro(baseUrl: String) = createWebService<T>(baseUrl)
 
@@ -92,10 +55,7 @@ open class BaseApiService() {
             if (response.code() == ApiData.State.SERVER_ERROR.code) {
                 return@Interceptor response
             } else if (response.code() == ApiData.State.UNAUTHORIZED.code) {
-                if (!isRefreshingLogin) {
-                    isRefreshingLogin = true
-                    //  refreshLogin()
-                }
+                // TODO: Handle state here
             }
             response
         }
@@ -103,10 +63,6 @@ open class BaseApiService() {
         return OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val newRequestBuilder = chain.request().newBuilder()
-                token?.let { token ->
-                    newRequestBuilder.addHeader("Authorization", token)
-                } ?: Log.w(TAG, "AUTH: Token was not added as header because it is null")
-
                 val newRequest = newRequestBuilder.build()
                 chain.proceed(newRequest)
             }

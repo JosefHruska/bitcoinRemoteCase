@@ -43,14 +43,6 @@ val myModule: Module = module {
     }
 }
 
-/*val testModule: Module = module {
-
-    // In-Memory database config
-    single("inMemoryDb") {
-        Room.inMemoryDatabaseBuilder(get(), Db::class.java).allowMainThreadQueries().build()
-    } bind com.ilab.spaceti.general.room.Db::class
-}*/
-
 private fun getMainApiService(baseUrl: String) =
     BaseApiService().getRetro<MainApi>(baseUrl)
 
