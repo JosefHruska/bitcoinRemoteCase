@@ -13,13 +13,9 @@ class App: Application() {
         startKoin(this, listOf(myModule))
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
             return
         }
         LeakCanary.install(this)
-
-      //  val crashlytics = Crashlytics.Builder().build()
     }
 
     companion object {

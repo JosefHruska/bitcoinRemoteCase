@@ -2,6 +2,6 @@
 <resources>
     <string-array name="choices">
         <item>Daily</item>
-        <item>Weekly</item>
+        <item>Hourly</item>
     </string-array>
 </resources>
