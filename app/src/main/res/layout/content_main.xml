@@ -16,6 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="8dp"
         app:columnCount="3"
+        app:selectedStrokeColor="@color/colorAccent"
         app:distributeEvenly="true"
         app:textVerticalPadding="6dp"
         app:radius="12dp"

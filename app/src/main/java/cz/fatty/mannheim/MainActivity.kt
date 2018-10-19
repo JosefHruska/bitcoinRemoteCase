@@ -6,13 +6,13 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import cz.fatty.mannheim.base.BaseActivity
-import cz.fatty.mannheim.extensions.ld
 import cz.fatty.mannheim.extensions.observe
 import cz.fatty.mannheim.utils.ChartDateFormatter
 import cz.fatty.mannheim.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import java.time.Period
 
 class MainActivity : BaseActivity<MainViewModel>() {
 
@@ -27,7 +27,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override fun initUi() {
         setupChart()
         vSegmentedControl.addOnSegmentClickListener {
-            ld("${it.absolutePosition}")
+            when (it.absolutePosition) {
+                PERIOD_DAILY -> viewModel.periodChanged(PERIOD_DAILY)
+                PERIOD_WEEKLY -> viewModel.periodChanged(PERIOD_WEEKLY)
+            }
         }
     }
 
@@ -53,10 +56,15 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
                 val xAxis = vChart.xAxis
                 xAxis.position = XAxis.XAxisPosition.BOTTOM
-                xAxis.valueFormatter = ChartDateFormatter()
+              //  xAxis.valueFormatter = ChartDateFormatter()
 
                 vChart.invalidate()
             }
         }
+    }
+
+    companion object {
+        const val PERIOD_DAILY = 0
+        const val PERIOD_WEEKLY = 1
     }
 }

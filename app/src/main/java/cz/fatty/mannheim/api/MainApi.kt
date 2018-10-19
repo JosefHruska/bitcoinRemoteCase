@@ -7,5 +7,8 @@ import retrofit2.http.GET
 interface MainApi {
 
     @GET("https://apiv2.bitcoinaverage.com/indices/global/history/BTCUSD?period=daily&format=json")
-    fun getRates() : Observable<List<BitcoinRate>>
+    fun getDailyRates() : Observable<List<BitcoinRate>>
+
+    @GET("https://apiv2.bitcoinaverage.com/indices/global/history/BTCUSD?period=monthly&format=json")
+    fun getMonthlyRates() : Observable<List<BitcoinRate>>
 }

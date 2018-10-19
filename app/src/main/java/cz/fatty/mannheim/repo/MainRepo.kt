@@ -8,4 +8,7 @@ import cz.fatty.mannheim.objects.BitcoinRate
 interface MainRepo {
 
     fun getRatesPerHour(): LiveData<List<BitcoinRate>>
+
+    fun getRatesPerDay(): LiveData<List<BitcoinRate>>
+
 }
