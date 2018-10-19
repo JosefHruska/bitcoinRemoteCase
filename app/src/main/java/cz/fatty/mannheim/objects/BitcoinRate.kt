@@ -6,7 +6,8 @@ import com.squareup.moshi.Json
 
 @Entity
 data class BitcoinRate(
-    @PrimaryKey(autoGenerate = true) @Json(name = "id") var id: Int,
     @Json(name = "time") var time: String? = null,
     @Json(name = "average") var average: Float? = null
-)
+) {
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
+}

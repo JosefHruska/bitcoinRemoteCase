@@ -1,19 +1,14 @@
 package cz.fatty.mannheim
 
-import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import com.crashlytics.android.Crashlytics
-import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crash.FirebaseCrash
 import cz.fatty.mannheim.base.BaseActivity
+import cz.fatty.mannheim.extensions.ld
 import cz.fatty.mannheim.extensions.observe
+import cz.fatty.mannheim.utils.ChartDateFormatter
 import cz.fatty.mannheim.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -31,10 +26,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun initUi() {
         setupChart()
-        Crashlytics.getInstance().crash();
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        vSegmentedControl.addOnSegmentClickListener {
+            ld("${it.absolutePosition}")
         }
     }
 
@@ -53,12 +46,17 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     private fun setupChart() {
         viewModel.bitcoinRates.observe(this) {
-            
+            if (it != null && it.isNotEmpty()) {
+                val dataSet = LineDataSet(it, "BTC : USD")
+                val lineData = LineData(listOf(dataSet))
+                vChart.data = lineData
+
+                val xAxis = vChart.xAxis
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+                xAxis.valueFormatter = ChartDateFormatter()
+
+                vChart.invalidate()
+            }
         }
-        var entries = listOf<Entry>(Entry(10F,420F), Entry(12F,420F), Entry(16F,350F))
-        val dataSet = LineDataSet(entries, "The Graph")
-        val lineData = LineData(dataSet)
-        vChart.data = lineData
-        vChart.invalidate()
     }
 }

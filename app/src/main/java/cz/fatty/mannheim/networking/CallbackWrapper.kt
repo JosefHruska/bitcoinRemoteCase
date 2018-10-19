@@ -1,8 +1,6 @@
 package cz.fatty.mannheim.networking
 
 import android.util.Log
-import com.crashlytics.android.Crashlytics
-import cz.fatty.mannheim.base.BaseApiService
 import cz.fatty.mannheim.repo.ApiData
 import io.reactivex.observers.DisposableObserver
 import retrofit2.HttpException
@@ -22,9 +20,9 @@ open class CallbackWrapper<T> : DisposableObserver<T>() {
     override fun onError(throwable: Throwable) {
         when (throwable) {
             is NoNetworkException     -> {
-                Crashlytics.log(
+              /*  Crashlytics.log(
                     Log.ERROR, BaseApiService.TAG, "No connection available (${throwable.message})"
-                )
+                )*/
                 data.state = ApiData.State.NET_NO_NETWORK
             }
             is HttpException          -> {
@@ -38,28 +36,28 @@ open class CallbackWrapper<T> : DisposableObserver<T>() {
                     ApiData.State.SERVER_ERROR.code     -> data.state = ApiData.State.SERVER_ERROR
                     else                                -> data.state = ApiData.State.OTHER
                 }
-                Crashlytics.log(
+               /* Crashlytics.log(
                     Log.ERROR,
                     BaseApiService.TAG,
                     "HTTP Error, code ${data.state}(${throwable.response().code()}) > 300. (${throwable.response().raw().request().url()})"
-                )
+                )*/
             }
             is SocketTimeoutException -> {
-                Crashlytics.log(Log.ERROR, BaseApiService.TAG, "Timeout exception")
+             //   Crashlytics.log(Log.ERROR, BaseApiService.TAG, "Timeout exception")
                 data.state = ApiData.State.NET_TIMEOUT
             }
             is IOException            -> {
-                Crashlytics.log(
+               /* Crashlytics.log(
                     Log.ERROR, BaseApiService.TAG, "IO Exception (${throwable.message})"
-                )
+                )*/
                 data.state = ApiData.State.NET_IO_ERROR
             }
             else                      -> {
-                Crashlytics.log(Log.ERROR, BaseApiService.TAG, "Other: ${throwable.message}")
+                //Crashlytics.log(Log.ERROR, BaseApiService.TAG, "Other: ${throwable.message}")
                 data.state = ApiData.State.NET_OTHER_ERROR
             }
         }
-        Crashlytics.logException(throwable)
+      //  Crashlytics.logException(throwable)
         data.data = null
         onResponse(data)
     }
