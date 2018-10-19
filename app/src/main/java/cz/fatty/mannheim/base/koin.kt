@@ -1,13 +1,13 @@
 package cz.fatty.mannheim.base
 
+import androidx.room.Room
 import cz.fatty.mannheim.Db
 import cz.fatty.mannheim.api.MainApi
 import cz.fatty.mannheim.api.MainApiHandler
-import cz.fatty.mannheim.repo.BitcoinDao
 import cz.fatty.mannheim.repo.MainRepo
 import cz.fatty.mannheim.repo.MainRepoImpl
 import cz.fatty.mannheim.viewModel.MainViewModel
-import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
@@ -19,23 +19,28 @@ import org.koin.dsl.module.module
 
 // Koin module
 val myModule: Module = module {
+
     // If the ViewModel has some parameters - just use get() to get them
     // To succesfully get the parameters you need to add their instance to: single{}
-    viewModel { MainViewModel(get("mainRepo")) }
-    single { BaseApiService(get("db")) }
-    single("mainRepo") {
+    viewModel { MainViewModel(get()) }
+    single { BaseApiService() }
+    single {
         MainRepoImpl(
-            get("db"), get("mainApi")
+            get(), get()
         ) as MainRepo
     }
-    single("mainApi") {
+    single {
         MainApiHandler(
             getMainApiService(
-                getBaseUrl(), get("db")
-            ), get("db")
+                getBaseUrl()
+            )
         )
     }
-    single("db") { Db.getInstance() } // This is how to add other Singleton instances
+    single { get<Db>().bitcoinDao() }
+    single {
+        Room.databaseBuilder(get(), Db::class.java, "bitcoin-db")
+            .build()
+    }
 }
 
 /*val testModule: Module = module {
@@ -46,7 +51,7 @@ val myModule: Module = module {
     } bind com.ilab.spaceti.general.room.Db::class
 }*/
 
-private fun getMainApiService(baseUrl: String, db: Db) =
-    BaseApiService(db).getRetro<MainApi>(baseUrl)
+private fun getMainApiService(baseUrl: String) =
+    BaseApiService().getRetro<MainApi>(baseUrl)
 
 private fun getBaseUrl() = BaseApiService.getUrl()

@@ -1,6 +1,7 @@
 package cz.fatty.mannheim
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
 import com.squareup.leakcanary.LeakCanary
 import cz.fatty.mannheim.base.myModule
 import org.koin.android.ext.android.startKoin
@@ -19,7 +20,7 @@ class App: Application() {
         }
         LeakCanary.install(this)
 
-  //      val crashlytics = Crashlytics.Builder().build()
+        val crashlytics = Crashlytics.Builder().build()
     }
 
     companion object {

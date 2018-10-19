@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "839530075348-sq5i2u4p8tm1oupt1qtrg991tf5ili8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cz.fatty.mannheim",
+            "certificate_hash": "9b96357d5a8e233a924c06ceae9200776b1604ed"
+          }
+        },
+        {
           "client_id": "839530075348-bej8mqfub2bgostk2dr5tdtmqmuj8iue.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839530075348-bej8mqfub2bgostk2dr5tdtmqmuj8iue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

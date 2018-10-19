@@ -5,20 +5,33 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import com.crashlytics.android.Crashlytics
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crash.FirebaseCrash
+import cz.fatty.mannheim.base.BaseActivity
+import cz.fatty.mannheim.extensions.observe
+import cz.fatty.mannheim.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+    override fun initViewModel() {
+        viewModel = getViewModel()
+    }
+
+    override fun getLayoutRes() = R.layout.activity_main
+
+    override fun getContentView() = vContent
+
+    override fun initUi() {
         setupChart()
+        Crashlytics.getInstance().crash();
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -32,9 +45,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
             else                 -> super.onOptionsItemSelected(item)
@@ -42,7 +52,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupChart() {
-
+        viewModel.bitcoinRates.observe(this) {
+            
+        }
         var entries = listOf<Entry>(Entry(10F,420F), Entry(12F,420F), Entry(16F,350F))
         val dataSet = LineDataSet(entries, "The Graph")
         val lineData = LineData(dataSet)

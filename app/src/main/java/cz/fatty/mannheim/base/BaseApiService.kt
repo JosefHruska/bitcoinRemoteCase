@@ -20,7 +20,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 
-open class BaseApiService(val db: Db) {
+open class BaseApiService() {
 
     var token: String? = null
     //var loginApi: LoginApi? = null

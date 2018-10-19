@@ -8,7 +8,7 @@ import cz.fatty.mannheim.objects.BitcoinRate
 import cz.fatty.mannheim.repo.BitcoinDao
 
 @Database(
-    entities = [BitcoinRate::class], version = 1
+    entities = [BitcoinRate::class], version = 1, exportSchema = false
 )
 
 abstract class Db : RoomDatabase() {
@@ -26,12 +26,11 @@ abstract class Db : RoomDatabase() {
          * @param context The context.
          * @return The singleton instance of SampleDatabase.
          */
-        @Synchronized
+
         fun getInstance(): Db {
             if (sInstance == null) {
-                sInstance = Room.databaseBuilder<Db>(
-                    app(), Db::class.java, "ex.db"
-                ).fallbackToDestructiveMigration().setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build()
+                sInstance = Room.databaseBuilder(app(), Db::class.java, "user-database")
+                    .build()
             }
             return sInstance!!
         }
