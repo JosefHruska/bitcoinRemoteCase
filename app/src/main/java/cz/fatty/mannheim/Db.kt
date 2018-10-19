@@ -1,9 +1,7 @@
 package cz.fatty.mannheim
 
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import cz.fatty.mannheim.App.Companion.app
 import cz.fatty.mannheim.objects.BitcoinDailyRate
 import cz.fatty.mannheim.objects.BitcoinRate
 import cz.fatty.mannheim.repo.BitcoinDao
@@ -15,26 +13,4 @@ import cz.fatty.mannheim.repo.BitcoinDao
 abstract class Db : RoomDatabase() {
 
     abstract fun bitcoinDao(): BitcoinDao
-
-    companion object {
-
-        /** The only instance  */
-        var sInstance: Db? = null
-
-        /**
-         * Gets the singleton instance of SampleDatabase.
-         *
-         * @param context The context.
-         * @return The singleton instance of SampleDatabase.
-         */
-
-        fun getInstance(): Db {
-            if (sInstance == null) {
-                sInstance = Room.databaseBuilder(app(), Db::class.java, "user-database")
-                    .fallbackToDestructiveMigration()
-                    .build()
-            }
-            return sInstance!!
-        }
-    }
 }
